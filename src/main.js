@@ -1,13 +1,13 @@
 import SortView from './view/sort-view.js';
 import FilterView from './view/filter-view.js';
 import {render} from './render.js';
-import BoardPresenter from './presenter/board-presenter.js';
+import TripPresenter from './presenter/trip-presenter.js';
 
 const siteHeaderElement = document.querySelector('.trip-controls__filters');
 const siteMainElement = document.querySelector('.trip-events');
-const boardPresenter = new BoardPresenter({boardContainer: siteMainElement});
+const tripPresenter = new TripPresenter({tripContainer: siteMainElement});
 
 render(new SortView(), siteMainElement);
 render(new FilterView(), siteHeaderElement);
 
-boardPresenter.init();
+tripPresenter.init();
