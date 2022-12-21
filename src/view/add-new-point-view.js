@@ -1,10 +1,9 @@
 
-import { humanizePointDueDatePoint } from '../util.js';
+//import { humanizePointDueDatePoint } from '../util.js';
 import {createElement} from '../render.js';
 
 function createAddNewPointTemplate(point) {
-  const {title, name, description, price, picture, dueDatePoint} = point;
-  const date = humanizePointDueDatePoint(dueDatePoint);
+  const {basePrice, dateFrom, dateTo, destination, offer} = point;
 
   return (`<ul class="trip-events__list">
   <li class="trip-events__item">
@@ -73,21 +72,21 @@ function createAddNewPointTemplate(point) {
           <label class="event__label  event__type-output" for="event-destination-1">
             Flight
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${name[0]}" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination.description}" list="destination-list-1">
           <datalist id="destination-list-1">
-            <option value="${name[1]}"></option>
-            <option value="${name[2]}"></option>
-            <option value="${name[3]}"></option>
-            <option value="${name[4]}"></option>
+            <option value="${destination.description}"></option>
+            <option value="${destination.description}"></option>
+            <option value="${destination.description}"></option>
+            <option value="${destination.description}"></option>
           </datalist>
         </div>
 
         <div class="event__field-group  event__field-group--time">
           <label class="visually-hidden" for="event-start-time-1">From</label>
-          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${date}">
+          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dateFrom}">
           &mdash;
           <label class="visually-hidden" for="event-end-time-1">To</label>
-          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${date}">
+          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dateTo}">
         </div>
 
         <div class="event__field-group  event__field-group--price">
@@ -95,7 +94,7 @@ function createAddNewPointTemplate(point) {
             <span class="visually-hidden">Price</span>
             &euro;
           </label>
-          <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="">
+          <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
         </div>
 
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
@@ -109,45 +108,45 @@ function createAddNewPointTemplate(point) {
             <div class="event__offer-selector">
               <input class="event__offer-checkbox  visually-hidden" id="event-offer-1" type="checkbox" name="event-offer-1" checked>
               <label class="event__offer-label" for="event-offer-1">
-                <span class="event__offer-title">${title}</span>
+                <span class="event__offer-title">${offer.title}</span>
                 &plus;&euro;&nbsp;
-                <span class="event__offer-price">${price}</span>
+                <span class="event__offer-price">${offer.price}</span>
               </label>
             </div>
 
             <div class="event__offer-selector">
               <input class="event__offer-checkbox  visually-hidden" id="event-offer-2" type="checkbox" name="event-offer-2" checked>
               <label class="event__offer-label" for="event-offer-2">
-                <span class="event__offer-title">${title}</span>
+                <span class="event__offer-title">${offer.title}</span>
                 &plus;&euro;&nbsp;
-                <span class="event__offer-price">${price}</span>
+                <span class="event__offer-price">${offer.price}</span>
               </label>
             </div>
 
             <div class="event__offer-selector">
               <input class="event__offer-checkbox  visually-hidden" id="event-offer-3" type="checkbox" name="event-offer-3">
               <label class="event__offer-label" for="event-offer-3">
-                <span class="event__offer-title">${title}</span>
+                <span class="event__offer-title">${offer.title}</span>
                 &plus;&euro;&nbsp;
-                <span class="event__offer-price">${price}</span>
+                <span class="event__offer-price">${offer.price}</span>
               </label>
             </div>
 
             <div class="event__offer-selector">
               <input class="event__offer-checkbox  visually-hidden" id="event-offer-4" type="checkbox" name="event-offer-4">
               <label class="event__offer-label" for="event-offer-4">
-                <span class="event__offer-title">${title}</span>
+                <span class="event__offer-title">${offer.title}</span>
                 &plus;&euro;&nbsp;
-                <span class="event__offer-price">${price}</span>
+                <span class="event__offer-price">${offer.price}</span>
               </label>
             </div>
 
             <div class="event__offer-selector">
               <input class="event__offer-checkbox  visually-hidden" id="event-offer-5" type="checkbox" name="event-offer-5">
               <label class="event__offer-label" for="event-offer-5">
-                <span class="event__offer-title">${title}</span>
+                <span class="event__offer-title">${offer.title}</span>
                 &plus;&euro;&nbsp;
-                <span class="event__offer-price">${price}</span>
+                <span class="event__offer-price">${offer.price}</span>
               </label>
             </div>
           </div>
@@ -155,15 +154,15 @@ function createAddNewPointTemplate(point) {
 
         <section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-          <p class="event__destination-description">${description}</p>
+          <p class="event__destination-description">${destination.description}</p>
 
           <div class="event__photos-container">
             <div class="event__photos-tape">
-              <img class="event__photo" src="${picture[0]}" alt="Event photo">
-              <img class="event__photo" src="${picture[1]}" alt="Event photo">
-              <img class="event__photo" src="${picture[2]}" alt="Event photo">
-              <img class="event__photo" src="${picture[3]}" alt="Event photo">
-              <img class="event__photo" src="${picture[4]}" alt="Event photo">
+              <img class="event__photo" src="${destination.picture}" alt="Event photo">
+              <img class="event__photo" src="${destination.picture}" alt="Event photo">
+              <img class="event__photo" src="${destination.picture}" alt="Event photo">
+              <img class="event__photo" src="${destination.picture}" alt="Event photo">
+              <img class="event__photo" src="${destination.picture}" alt="Event photo">
             </div>
           </div>
         </section>

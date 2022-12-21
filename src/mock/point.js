@@ -1,69 +1,57 @@
 import {getRandomArrayElement} from '../util.js';
 import {TYPES} from '../const.js';
-import { getRandomDestination } from './destination.js';
-import { getRandomOffer } from './offer.js';
 import {humanizePointDueTime} from '../util.js';
 
-const mockPoints = [
+const points = [
   {
-    'base_price': 1100,
-    'date_from': humanizePointDueTime(),
-    'date_to': humanizePointDueTime(),
-    'destination': getRandomDestination,
+    'basePrice': 1100,
+    'dateFrom': humanizePointDueTime(),
+    'dateTo': humanizePointDueTime(),
+    'destination': [1],
     'id': '0',
-    'offers': getRandomOffer,
+    'offers': [1],
     'type': getRandomArrayElement(TYPES)
   },
   {
-    'base_price': 1200,
-    'date_from': humanizePointDueTime(),
-    'date_to': humanizePointDueTime(),
-    'destination': getRandomDestination,
+    'basePrice': 1200,
+    'dateFrom': humanizePointDueTime(),
+    'dateTo': humanizePointDueTime(),
+    'destination': [2],
     'id': '1',
-    'offers': getRandomOffer,
+    'offers': [1],
     'type': getRandomArrayElement(TYPES)
   },
   {
-    'base_price': 1300,
-    'date_from': humanizePointDueTime(),
-    'date_to': humanizePointDueTime(),
-    'destination': getRandomDestination,
+    'basePrice': 1300,
+    'dateFrom': humanizePointDueTime(),
+    'dateTo': humanizePointDueTime(),
+    'destination': [3],
     'id': '2',
-    'offers': getRandomOffer,
+    'offers': [1],
     'type': getRandomArrayElement(TYPES)
   },
   {
-    'base_price': 1400,
-    'date_from': humanizePointDueTime(),
-    'date_to': humanizePointDueTime(),
-    'destination': getRandomDestination,
+    'basePrice': 1400,
+    'dateFrom': humanizePointDueTime(),
+    'dateTo': humanizePointDueTime(),
+    'destination': [4],
     'id': '3',
-    'offers': getRandomOffer,
+    'offers': [1],
     'type': getRandomArrayElement(TYPES)
   },
   {
-    'base_price': 1500,
-    'date_from': humanizePointDueTime(),
-    'date_to': humanizePointDueTime(),
-    'destination': getRandomDestination,
+    'basePrice': 1500,
+    'dateFrom': humanizePointDueTime(),
+    'dateTo': humanizePointDueTime(),
+    'destination': [5],
     'id': '4',
-    'offers': getRandomOffer,
+    'offers': [1],
     'type': getRandomArrayElement(TYPES)
   },
-  {
-    'base_price': 1100,
-    'date_from': humanizePointDueTime(),
-    'date_to': humanizePointDueTime(),
-    'destination': getRandomDestination,
-    'id': '5',
-    'offers': getRandomOffer,
-    'type': getRandomArrayElement(TYPES)
-  },
-
 ];
 
 function getRandomPoint() {
-  return getRandomArrayElement(mockPoints);
+  return getRandomArrayElement(points);
 }
 
 export {getRandomPoint};

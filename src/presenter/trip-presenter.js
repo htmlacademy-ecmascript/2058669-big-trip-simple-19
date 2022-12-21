@@ -3,8 +3,6 @@ import AddNewPointView from '../view/add-new-point-view.js';
 import {render} from '../render.js';
 
 export default class TripPresenter {
-  tripComponent = new AddNewPointView();
-
 
   constructor({tripContainer, pointsModel}) {
     this.tripContainer = tripContainer;
@@ -20,5 +18,7 @@ export default class TripPresenter {
       render(new ListView({point: this.tripPoints[i]}), this.tripComponent.getElement());
     }
   }
+
+  tripComponent = new AddNewPointView();
 }
 

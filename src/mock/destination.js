@@ -1,6 +1,6 @@
 import {getRandomArrayElement} from '../util.js';
 
-const mockDestinations = [
+const destinations = [
   {
     'id': 1,
     'description': 'Chamonix, is a beautiful city, a true asian pearl, with crowded streets.',
@@ -59,7 +59,7 @@ const mockDestinations = [
 ];
 
 function getRandomDestination() {
-  return getRandomArrayElement(mockDestinations);
+  return getRandomArrayElement(destinations);
 }
 
 export {getRandomDestination};
