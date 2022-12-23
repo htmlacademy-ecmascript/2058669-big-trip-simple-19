@@ -58,8 +58,8 @@ const destinations = [
   }
 ];
 
-function getRandomDestination() {
+function destination() {
   return getRandomArrayElement(destinations);
 }
 
-export {getRandomDestination};
+export {destination};
