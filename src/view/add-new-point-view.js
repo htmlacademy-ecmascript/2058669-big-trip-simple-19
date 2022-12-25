@@ -1,13 +1,58 @@
+import { createElement } from '../render.js';
+import { offersList } from '../mock/offer.js';
+import { destinationsList } from '../mock/destination.js';
+import { humanizePointDueDatePoint } from '../util.js';
 
-//import { humanizePointDueDatePoint } from '../util.js';
+const createOffersTemplate = (availableOffers, offers) => availableOffers.map((offer) => {
+  const isChecked = offers.includes(offer.id) ? 'checked' : '';
+  return `  <div class="event__offer-selector">
+              <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${offer.id}" type="checkbox" name="event-offer-luggage" ${isChecked}>
+              <label class="event__offer-label" for="event-offer-luggage-${offer.id}">
+                <span class="event__offer-title">${offer.title}</span>
+                &plus;&euro;&nbsp;
+                <span class="event__offer-price">${offer.price}</span>
+              </label>
+            </div>
+           `;
+}).join('');
 
-import {createElement} from '../render.js';
+const createDestinationsTemplate = (availableDestinations, destination) => {
+  const destinationOptions = availableDestinations.map((destinationPoint) => `<option value="${destinationPoint.name}"></option>`).join('');
+  const destinationItem = availableDestinations.find((destinationPoint) => destinationPoint.id === destination);
+  return `<div class="event__field-group  event__field-group--destination">
+          <label class="event__label  event__type-output" for="event-destination-1">
+            Flight
+          </label>
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text"
+          name="event-destination" value="${destinationItem.name}" list="destination-list-1">
+          <datalist id="destination-list-1">
+            ${destinationOptions}
+          </datalist>
+        </div>
+           `;
+};
+
+const createDestinationsDescriptionPhotosTemplate = (availableDestinations, destination) => {
+  const destinationItem = availableDestinations.find((destinationPoint) => destinationPoint.id === destination);
+  const arrayPictures = destinationItem.pictures;
+  const destinationPhoto = arrayPictures.map((picture) => `<img class="event__photo" src="${picture.src}" alt="${picture.description}">`).join('');
+  return `<section class="event__section  event__section--destination">
+          <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+          <p class="event__destination-description">${destinationItem.description}</p>
+
+          <div class="event__photos-container">
+            <div class="event__photos-tape">
+              ${destinationPhoto}
+            </div>
+          </div>
+        </section>
+        `;
+};
 
 function createAddNewPointTemplate(point) {
   const {basePrice, dateFrom, dateTo, destination, offers} = point;
-  point.offers = offers.id;
-  point.destination = destination.id;
-
+  const dateTimePointFrom = humanizePointDueDatePoint(dateFrom);
+  const dateTimePointTo = humanizePointDueDatePoint(dateTo);
   return (`
   <li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -71,25 +116,14 @@ function createAddNewPointTemplate(point) {
           </div>
         </div>
 
-        <div class="event__field-group  event__field-group--destination">
-          <label class="event__label  event__type-output" for="event-destination-1">
-            Flight
-          </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${point.destination.name}" list="destination-list-1">
-          <datalist id="destination-list-1">
-            <option value="${point.destination.name}"></option>
-            <option value="${point.destination.name}"></option>
-            <option value="${point.destination.name}"></option>
-            <option value="${point.destination.name}"></option>
-          </datalist>
-        </div>
+        ${createDestinationsTemplate(destinationsList, destination)}
 
         <div class="event__field-group  event__field-group--time">
           <label class="visually-hidden" for="event-start-time-1">From</label>
-          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dateFrom}">
+          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dateTimePointFrom}">
           &mdash;
           <label class="visually-hidden" for="event-end-time-1">To</label>
-          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dateTo}">
+          <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dateTimePointTo}">
         </div>
 
         <div class="event__field-group  event__field-group--price">
@@ -108,67 +142,11 @@ function createAddNewPointTemplate(point) {
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
           <div class="event__available-offers">
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-1" type="checkbox" name="event-offer-1" checked>
-              <label class="event__offer-label" for="event-offer-1">
-                <span class="event__offer-title">${point.offers.title}</span>
-                &plus;&euro;&nbsp;
-                <span class="event__offer-price">${point.offers.price}</span>
-              </label>
-            </div>
-
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-2" type="checkbox" name="event-offer-2" checked>
-              <label class="event__offer-label" for="event-offer-2">
-                <span class="event__offer-title">${point.offers.title}</span>
-                &plus;&euro;&nbsp;
-                <span class="event__offer-price">${point.offers.price}</span>
-              </label>
-            </div>
-
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-3" type="checkbox" name="event-offer-3">
-              <label class="event__offer-label" for="event-offer-3">
-                <span class="event__offer-title">${point.offers.title}</span>
-                &plus;&euro;&nbsp;
-                <span class="event__offer-price">${point.offers.price}</span>
-              </label>
-            </div>
-
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-4" type="checkbox" name="event-offer-4">
-              <label class="event__offer-label" for="event-offer-4">
-                <span class="event__offer-title">${point.offers.title}</span>
-                &plus;&euro;&nbsp;
-                <span class="event__offer-price">${point.offers.price}</span>
-              </label>
-            </div>
-
-            <div class="event__offer-selector">
-              <input class="event__offer-checkbox  visually-hidden" id="event-offer-5" type="checkbox" name="event-offer-5">
-              <label class="event__offer-label" for="event-offer-5">
-                <span class="event__offer-title">${point.offers.title}</span>
-                &plus;&euro;&nbsp;
-                <span class="event__offer-price">${point.offers.price}</span>
-              </label>
-            </div>
+          ${createOffersTemplate(offersList, offers)}
           </div>
         </section>
 
-        <section class="event__section  event__section--destination">
-          <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-          <p class="event__destination-description">${point.destination.description}</p>
-
-          <div class="event__photos-container">
-            <div class="event__photos-tape">
-              <img class="event__photo" src="${point.destination.picture}" alt="Event photo">
-              <img class="event__photo" src="${point.destination.picture}" alt="Event photo">
-              <img class="event__photo" src="${point.destination.picture}" alt="Event photo">
-              <img class="event__photo" src="${point.destination.picture}" alt="Event photo">
-              <img class="event__photo" src="${point.destination.picture}" alt="Event photo">
-            </div>
-          </div>
-        </section>
+          ${createDestinationsDescriptionPhotosTemplate(destinationsList, destination)}
       </section>
     </form>
   </li>`
@@ -176,7 +154,7 @@ function createAddNewPointTemplate(point) {
 }
 
 export default class AddNewPointView {
-  constructor({point}) {
+  constructor(point) {
     this.point = point;
   }
 

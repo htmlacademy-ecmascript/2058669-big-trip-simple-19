@@ -1,23 +1,42 @@
 import {createElement} from '../render.js';
+import { offersList } from '../mock/offer.js';
+import { destinationsList } from '../mock/destination.js';
+import { humanizePointDueDate } from '../util.js';
+import { humanizePointDueTime } from '../util.js';
+
+const createDestinationsTemplate = (availableDestinations, destination) => {
+  const destinationItem = availableDestinations.find((destinationPoint) => destinationPoint.id === destination);
+  return `${destinationItem.name} `;
+};
+
+const createOffersTemplateTitle = (availableOffers, offers) => availableOffers.map((offer) => {
+  const offerItem = offers.includes(offer.id);
+  return `${offerItem.title}`;
+});
+
+const createOffersTemplatePrice = (availableOffers, offers) => availableOffers.map((offer) => {
+  const offerItem = offers.includes(offer.id);
+  return `${offerItem.title}`;
+});
 
 function createPointTemplate(point) {
   const { basePrice, dateFrom, dateTo, destination, offers, type } = point;
-  point.offers = offers.id;
-  point.destination = destination.id;
-
+  const dueTimeFrom = humanizePointDueTime(dateFrom);
+  const dueTimeTo = humanizePointDueTime(dateTo);
+  const dueDate = humanizePointDueDate(dateFrom);
   return (
     `<li class="trip-events__item">
               <div class="event">
-                <time class="event__date" datetime="2019-03-18">MAR 18</time>
+                <time class="event__date" datetime="${dateFrom}">${dueDate}</time>
                 <div class="event__type">
                   <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
                 </div>
-                <h3 class="event__title">${type} ${point.destination.name}</h3>
+                <h3 class="event__title">${type} ${createDestinationsTemplate(destinationsList, destination)}</h3>
                 <div class="event__schedule">
                   <p class="event__time">
-                    <time class="event__start-time" datetime="${dateFrom}">10:30</time>
+                    <time class="event__start-time" datetime="${dateFrom}">${dueTimeFrom}</time>
                     &mdash;
-                    <time class="event__end-time" datetime="${dateTo}">11:00</time>
+                    <time class="event__end-time" datetime="${dateTo}">${dueTimeTo}</time>
                   </p>
                 </div>
                 <p class="event__price">
@@ -26,10 +45,10 @@ function createPointTemplate(point) {
                 <h4 class="visually-hidden">Offers:</h4>
                 <ul class="event__selected-offers">
                   <li class="event__offer">
-                    <span class="event__offer-title">${point.offers.title}</span>
-                    &plus;&euro;&nbsp;
-                    <span class="event__offer-price">${point.offers.price}</span>
-                  </li>
+            <span class="event__offer-title">${createOffersTemplateTitle(offersList, offers)}</span>
+              &plus;&euro;&nbsp;
+            <span class="event__offer-price">${createOffersTemplatePrice(offersList, offers)}</span>
+          </li>
                 </ul>
                 <button class="event__rollup-btn" type="button">
                   <span class="visually-hidden">Open event</span>
@@ -40,8 +59,12 @@ function createPointTemplate(point) {
 }
 
 export default class PointView {
+  constructor(point) {
+    this.point = point;
+  }
+
   getTemplate() {
-    return createPointTemplate();
+    return createPointTemplate(this.point);
   }
 
   getElement() {

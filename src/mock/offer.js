@@ -1,6 +1,6 @@
 import {getRandomArrayElement} from '../util.js';
 
-const offers = [
+const offersList = [
   {
     'type': 'flight',
     'id': 1,
@@ -40,7 +40,8 @@ const offers = [
 ];
 
 function getRandomOffer() {
-  return getRandomArrayElement(offers);
+  return getRandomArrayElement(offersList);
 }
 
 export {getRandomOffer};
+export { offersList };

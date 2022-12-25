@@ -13,8 +13,9 @@ export default class TripPresenter {
   init() {
     this.tripPoints = [...this.pointsModel.getPoints()];
 
-    render(new ListView(this.tripPoints[1]), this.tripContainer);
+    render(new ListView(), this.tripContainer);
     render(new AddNewPointView(this.tripPoints[1]), this.tripContainer);
+
     for (let i = 0; i < this.tripPoints.length; i++) {
       render(new PointView(this.tripPoints[i]), this.tripContainer);
     }

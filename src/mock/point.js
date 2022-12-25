@@ -15,8 +15,8 @@ const points = [
   },
   {
     'basePrice': 1200,
-    'dateFrom': '2019-07-10T01:52:56.845Z',
-    'dateTo': '2019-07-12T03:20:13.375Z',
+    'dateFrom': '2019-07-16T01:52:56.845Z',
+    'dateTo': '2019-07-17T03:20:13.375Z',
     'destination': destination.id,
     'id': '1',
     'offers': [2],
@@ -24,8 +24,8 @@ const points = [
   },
   {
     'basePrice': 1300,
-    'dateFrom': '2019-07-10T08:59:56.845Z',
-    'dateTo': '2019-07-12T06:21:13.375Z',
+    'dateFrom': '2019-07-18T08:59:56.845Z',
+    'dateTo': '2019-07-19T06:21:13.375Z',
     'destination': destination.id,
     'id': '2',
     'offers': [3],
@@ -33,8 +33,8 @@ const points = [
   },
   {
     'basePrice': 1400,
-    'dateFrom': '2019-07-10T09:52:56.845Z',
-    'dateTo': '2019-07-12T14:27:13.375Z',
+    'dateFrom': '2019-07-19T09:52:56.845Z',
+    'dateTo': '2019-07-19T14:27:13.375Z',
     'destination': destination.id,
     'id': '3',
     'offers': [4],
@@ -42,8 +42,8 @@ const points = [
   },
   {
     'basePrice': 1500,
-    'dateFrom': '2019-07-10T16:52:56.845Z',
-    'dateTo': '2019-07-12T18:26:13.375Z',
+    'dateFrom': '2019-07-20T16:52:56.845Z',
+    'dateTo': '2019-07-21T18:26:13.375Z',
     'destination': destination.id,
     'id': '4',
     'offers': [5],
@@ -56,4 +56,5 @@ function point() {
 }
 
 export {point};
-
+const offersTemplateInPoint = getRandomArrayElement(points).offers;
+export { offersTemplateInPoint };
