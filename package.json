@@ -15,6 +15,10 @@
     "build": "webpack --mode production",
     "start": "webpack serve --mode development --open"
   },
+  "dependencies": {
+    "dayjs": "^1.11.6",
+    "duration": "^0.2.2"
+  },
   "devDependencies": {
     "@babel/core": "7.20.5",
     "@babel/preset-env": "7.20.2",
