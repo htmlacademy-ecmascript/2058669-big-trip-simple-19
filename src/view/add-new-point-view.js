@@ -18,7 +18,7 @@ const createOffersTemplate = (availableOffers, offers) => availableOffers.map((o
 }).join('');
 
 const createOfferTypesTemplate = (typesList, type) => typesList.map((typeInPoint) => {
-  const isChecked = type.includes(typeInPoint) ? 'checked' : '';
+  const isChecked = type === typeInPoint ? 'checked' : '';
   const upperLetterType = typeInPoint[0].toUpperCase() + typeInPoint.slice(1);
   return `  <div class="event__type-item">
                 <input id="event-type-${typeInPoint}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${typeInPoint}" ${isChecked}>
@@ -27,12 +27,12 @@ const createOfferTypesTemplate = (typesList, type) => typesList.map((typeInPoint
            `;
 }).join('');
 
-const createDestinationsTemplate = (availableDestinations, destination) => {
+const createDestinationsTemplate = (availableDestinations, destination, type) => {
   const destinationOptions = availableDestinations.map((destinationPoint) => `<option value="${destinationPoint.name}"></option>`).join('');
   const destinationItem = availableDestinations.find((destinationPoint) => destinationPoint.id === destination);
   return `<div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-1">
-            Flight
+            ${type}
           </label>
           <input class="event__input  event__input--destination" id="event-destination-1" type="text"
           name="event-destination" value="${destinationItem.name}" list="destination-list-1">
@@ -72,7 +72,7 @@ function createAddNewPointTemplate(point) {
         <div class="event__type-wrapper">
           <label class="event__type  event__type-btn" for="event-type-toggle-1">
             <span class="visually-hidden">Choose event type</span>
-            <img class="event__type-icon" width="17" height="17" src="img/icons/flight.png" alt="Event type icon">
+            <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -86,7 +86,7 @@ function createAddNewPointTemplate(point) {
           </div>
         </div>
 
-        ${createDestinationsTemplate(destinationsList, destination)}
+        ${createDestinationsTemplate(destinationsList, destination, type)}
 
         <div class="event__field-group  event__field-group--time">
           <label class="visually-hidden" for="event-start-time-1">From</label>

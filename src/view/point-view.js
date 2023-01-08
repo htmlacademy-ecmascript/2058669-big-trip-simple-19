@@ -13,9 +13,11 @@ const createDestinationsTemplate = (availableDestinations, destination) => {
 
 const createOffersTemplate = (availableOffers, offers) => offers.map((offer) => {
   const offerItem = availableOffers.find((offerPoint) => offerPoint.id === offer);
-  return `<span class="event__offer-title">${offerItem.title}</span>
-            &plus;&euro;&nbsp;
-          <span class="event__offer-price">${offerItem.price}</span>`;
+  return `<li class="event__offer">
+            <span class="event__offer-title">${offerItem.title}</span>
+             &plus;&euro;&nbsp;
+            <span class="event__offer-price">${offerItem.price}</span>
+            </li>`;
 });
 
 function createPointTemplate(point) {
@@ -46,9 +48,9 @@ function createPointTemplate(point) {
                 </p>
                 <h4 class="visually-hidden">Offers:</h4>
                 <ul class="event__selected-offers">
-                  <li class="event__offer">
+
                     ${createOffersTemplate(offersList, offers)}
-                  </li>
+
                 </ul>
                 <button class="event__rollup-btn" type="button">
                   <span class="visually-hidden">Open event</span>
