@@ -17,17 +17,15 @@ export default class TripPresenter {
     this.#tripPoints = [...this.#pointsModel.points];
 
     render(this.#listContainer, this.#tripContainer);
-    //render(new AddNewPointView(this.#tripPoints[1]), this.#listContainer.element);
 
     for (let i = 0; i < this.#tripPoints.length; i++) {
       this.#renderPoint(this.#tripPoints[i]);
-      //render(new PointView(this.#tripPoints[i]), this.#listContainer.element);
     }
   }
 
   #renderPoint(point) {
-    const listComponent = new PointView({ point });
-    const listEditComponent = new AddNewPointView({point});
+    const listComponent = new PointView(point);
+    const listEditComponent = new AddNewPointView(point);
 
     const replaceElementToForm = () => {
       this.#listContainer.element.replaceChild(listEditComponent.element, listComponent.element);
@@ -35,13 +33,25 @@ export default class TripPresenter {
     const replaceFormToElement = () => {
       this.#listContainer.element.replaceChild(listComponent.element, listEditComponent.element);
     };
-
-    listComponent.element.querySelector('.trip-events__item').addEventListener('click', () => {
+    const escKeyDownHandler = (evt) => {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        replaceFormToElement();
+        document.removeEventListener('keydown', escKeyDownHandler);
+      }
+    };
+    listComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
       replaceElementToForm();
+      document.addEventListener('keydown', escKeyDownHandler);
     });
 
     listEditComponent.element.querySelector('form').addEventListener('submit', (evt) => {
       evt.preventDefault();
+      replaceFormToElement();
+      document.addEventListener('keydown', escKeyDownHandler);
+    });
+
+    listEditComponent.element.querySelector('.event__reset-btn').addEventListener('click', () => {
       replaceFormToElement();
     });
 
