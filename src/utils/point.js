@@ -6,7 +6,7 @@ const DATE_FORMAT_POINT = 'DD/MM/YY HH:mm';
 const HOUR_IN_DAY = 24;
 const MIN_IN_HOUR = 60;
 // eslint-disable-next-line no-undef
-const duration = require('../node_modules/dayjs/plugin/duration');
+const duration = require('../../node_modules/dayjs/plugin/duration.js');
 dayjs.extend(duration);
 
 const subtractDates = (startDate, endDate) => {
@@ -25,10 +25,6 @@ const subtractDates = (startDate, endDate) => {
   return dayjs.duration(diffInTotalMinutes, 'minutes').format('DD[D] HH[H] mm[M]');
 };
 
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
 function humanizePointDueTime(dueTime) {
   return dueTime ? dayjs(dueTime).format(TIME_FORMAT) : '';
 }
@@ -42,4 +38,4 @@ function humanizePointDueDatePoint(dueDatePoint) {
 }
 
 
-export { getRandomArrayElement, humanizePointDueDate, humanizePointDueDatePoint, humanizePointDueTime, subtractDates };
+export { humanizePointDueDate, humanizePointDueDatePoint, humanizePointDueTime, subtractDates };

@@ -1,7 +1,7 @@
 import InfoView from './view/trip-info-view.js';
 import SortView from './view/sort-view.js';
 import FilterView from './view/filter-view.js';
-import {render} from './render.js';
+import { render } from './framework/render.js';
 import TripPresenter from './presenter/trip-presenter.js';
 import PointsModel from './model/points-model.js';
 
