@@ -2,7 +2,7 @@ import ListView from '../view/list-view.js';
 import PointView from '../view/point-view.js';
 import AddNewPointView from '../view/add-new-point-view.js';
 import EmptyView from '../view/list-empty-view.js';
-import { render } from '../render.js';
+import { render, replace } from '../framework/render.js';
 export default class TripPresenter {
   #listContainer = new ListView();
   #tripContainer = null;
@@ -30,36 +30,40 @@ export default class TripPresenter {
   }
 
   #renderPoint(point) {
-    const listComponent = new PointView(point);
-    const listEditComponent = new AddNewPointView(point);
 
-    const replaceElementToForm = () => {
-      this.#listContainer.element.replaceChild(listEditComponent.element, listComponent.element);
-    };
-    const replaceFormToElement = () => {
-      this.#listContainer.element.replaceChild(listComponent.element, listEditComponent.element);
-    };
     const escKeyDownHandler = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
-        replaceFormToElement();
+        replaceFormToElement.call(this);
         document.removeEventListener('keydown', escKeyDownHandler);
       }
     };
-    listComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
-      replaceElementToForm();
-      document.addEventListener('keydown', escKeyDownHandler);
+    const listComponent = new PointView({
+      point,
+      onEditClick: () => {
+        replaceElementToForm.call(this);
+        document.addEventListener('keydown', escKeyDownHandler);
+      }
     });
 
-    listEditComponent.element.querySelector('form').addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      replaceFormToElement();
-      document.addEventListener('keydown', escKeyDownHandler);
+    const listEditComponent = new AddNewPointView({
+      point,
+      onFormSubmit: () => {
+        replaceFormToElement.call(this);
+        document.addEventListener('keydown', escKeyDownHandler);
+      },
+      onFormCancel: () => {
+        replaceFormToElement.call(this);
+      }
     });
 
-    listEditComponent.element.querySelector('.event__reset-btn').addEventListener('click', () => {
-      replaceFormToElement();
-    });
+    function replaceElementToForm(){
+      replace(listEditComponent, listComponent);
+    }
+
+    function replaceFormToElement(){
+      replace(listComponent, listEditComponent);
+    }
 
     render(listComponent, this.#listContainer.element);
   }

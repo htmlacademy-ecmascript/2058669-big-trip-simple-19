@@ -1,7 +1,7 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { offersList } from '../mock/offer.js';
 import { destinationsList } from '../mock/destination.js';
-import { humanizePointDueDatePoint } from '../util.js';
+import { humanizePointDueDatePoint } from '../utils/point.js';
 import { TYPES } from '../const.js';
 
 const createOffersTemplate = (availableOffers, offers) => availableOffers.map((offer) => {
@@ -123,28 +123,34 @@ function createAddNewPointTemplate(point) {
   );
 }
 
-export default class AddNewPointView {
-
-  #element = null;
+export default class AddNewPointView extends AbstractView {
   #point = null;
+  #handleFormSubmit = null;
+  #handleFormCancel = null;
 
-  constructor(point) {
+  constructor({point, onFormSubmit, onFormCancel}) {
+    super();
     this.#point = point;
+    this.#handleFormSubmit = onFormSubmit;
+    this.#handleFormCancel = onFormCancel;
+
+    this.element.querySelector('form')
+      .addEventListener('submit', this.#formSubmitHandler);
+    this.element.querySelector('.event__reset-btn')
+      .addEventListener('click', this.#formCancelHandler);
   }
 
   get template() {
     return createAddNewPointTemplate(this.#point);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFormSubmit();
+  };
 
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
+  #formCancelHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFormCancel();
+  };
 }

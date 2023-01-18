@@ -1,4 +1,4 @@
-import {getRandomArrayElement} from '../util.js';
+import { getRandomArrayElement } from '../utils/common.js';
 import {TYPES} from '../const.js';
 import { destination } from './destination.js';
 //import {humanizePointDueTime} from '../util.js';
