@@ -1,10 +1,10 @@
 import { FilterType } from '../const';
-//??
+import { filterFuture, filterPast, filterPresent } from './point';
 const filter = {
-  [FilterType.FUTURE]: (tasks) => tasks.filter((task) => !task.isArchive),
-  // eslint-disable-next-line no-undef
-  [FilterType.EVERYTHING]: (tasks) => tasks.filter((task) => isTaskExpired(task.dueDate) && !task.isArchive),
-
+  [FilterType.EVERYTHING]: (points) => points,
+  [FilterType.FUTURE]: (points) => points.filter((point) => filterFuture(point)),
+  [FilterType.PAST]: (points) => points.filter((point) => filterPast(point)),
+  [FilterType.PRESENT]: (points) => points.filter((point) => filterPresent(point))
 };
 
 export { filter };

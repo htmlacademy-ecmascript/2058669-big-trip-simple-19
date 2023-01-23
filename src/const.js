@@ -3,6 +3,8 @@ const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 's
 const FilterType = {
   FUTURE: 'future',
   EVERYTHING: 'everything',
+  PAST: 'past',
+  PRESENT: 'present'
 };
 
 export { TYPES, FilterType };
