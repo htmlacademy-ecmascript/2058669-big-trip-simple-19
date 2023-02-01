@@ -1,56 +1,55 @@
 import FilterView from '../view/filter-view';
-import { render, replace } from '../framework/render.js';
+import { render } from '../framework/render.js';
 import { FilterType } from '../const';
+import { filter } from '../utils/filter';
+import { generateFilter } from '../mock/filter.js';
+
 
 export default class FilterPresenter {
   #filterContainer = null;
   #filterModel = null;
+  #pointsModel = null;
   #filterComponent = null;
 
-  constructor(filterContainer, filterModel) {
+  constructor({filterContainer, filterModel, pointsModel}) {
     this.#filterContainer = filterContainer;
     this.#filterModel = filterModel;
+    this.#pointsModel = pointsModel;
   }
 
   get filters() {
+    const pointsFilter = this.#pointsModel.points;
     return [
       {
         type: FilterType.EVERYTHING,
         name: 'EVERYTHING',
-        count: FilterType.EVERYTHING.length,
+        count: filter[FilterType.EVERYTHING](pointsFilter).length,
 
       },
       {
         type: FilterType.FUTURE,
         name: 'FUTURE',
-        count: FilterType.FUTURE.length,
+        count: filter[FilterType.FUTURE](pointsFilter).length,
       },
       {
         type: FilterType.PAST,
         name: 'PAST',
-        count: FilterType.PAST.length,
+        count: filter[FilterType.PAST](pointsFilter).length,
       },
       {
         type: FilterType.PRESENT,
         name: 'PRESENT',
-        count: FilterType.PRESENT.length,
+        count: filter[FilterType.PRESENT](pointsFilter).length,
       }
     ];
   }
 
   init = () => {
     const filters = this.filters;
-    const prevFilterComponent = this.#filterComponent;
 
-    this.#filterComponent = new FilterView(filters, this.#filterModel.filter);
-
-
-    if (prevFilterComponent === null) {
-      render(this.#filterContainer, this.#filterComponent);
-      return;
-    }
-
-    replace(this.#filterComponent, prevFilterComponent);
-
+    this.#filterComponent = new FilterView(this.#filterModel.filter, filters);
+    render(this.#filterComponent, this.#filterContainer);
   };
+
 }
+

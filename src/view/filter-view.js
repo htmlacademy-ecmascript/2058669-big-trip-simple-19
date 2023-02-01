@@ -18,6 +18,7 @@ function createFilterItemTemplate(filter) {
 }
 
 function createFilterTemplate(filterItems) {
+  console.log(filterItems);
   const filterItemsTemplate = filterItems
     .map((filter) => createFilterItemTemplate(filter))
     .join('');
@@ -29,7 +30,6 @@ function createFilterTemplate(filterItems) {
       </form>`
   );
 }
-
 export default class FilterView extends AbstractView {
   #filters = null;
 

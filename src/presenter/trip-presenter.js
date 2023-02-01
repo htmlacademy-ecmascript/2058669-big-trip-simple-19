@@ -16,7 +16,6 @@ export default class TripPresenter {
   init() {
 
     this.#tripPoints = [...this.#pointsModel.points];
-
     if (this.#tripPoints.length === 0) {
       render(new EmptyView(), this.#tripContainer);
     } else {
