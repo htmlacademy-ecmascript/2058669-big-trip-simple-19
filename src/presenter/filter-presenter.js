@@ -2,7 +2,7 @@ import FilterView from '../view/filter-view';
 import { render } from '../framework/render.js';
 import { FilterType } from '../const';
 import { filter } from '../utils/filter';
-import { generateFilter } from '../mock/filter.js';
+//import { generateFilter } from '../mock/filter.js';
 
 
 export default class FilterPresenter {
@@ -46,7 +46,8 @@ export default class FilterPresenter {
 
   init = () => {
     const filters = this.filters;
-
+    console.log(this.#filterModel.filter);
+    console.log(filters);
     this.#filterComponent = new FilterView(this.#filterModel.filter, filters);
     render(this.#filterComponent, this.#filterContainer);
   };

@@ -18,7 +18,7 @@ function createFilterItemTemplate(filter) {
 }
 
 function createFilterTemplate(filterItems) {
-  console.log(filterItems);
+
   const filterItemsTemplate = filterItems
     .map((filter) => createFilterItemTemplate(filter))
     .join('');
@@ -32,13 +32,15 @@ function createFilterTemplate(filterItems) {
 }
 export default class FilterView extends AbstractView {
   #filters = null;
+  #currentFilter = null;
 
-  constructor({ filters }) {
+  constructor( currentFilter, filters ) {
     super();
     this.#filters = filters;
+    this.#currentFilter = currentFilter;
   }
 
   get template() {
-    return createFilterTemplate(this.#filters);
+    return createFilterTemplate(this.#currentFilter, this.#filters);
   }
 }
