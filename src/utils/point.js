@@ -9,6 +9,30 @@ const MIN_IN_HOUR = 60;
 const duration = require('../../node_modules/dayjs/plugin/duration.js');
 dayjs.extend(duration);
 
+// eslint-disable-next-line no-undef
+const isSameOrBefore = require('../../node_modules/dayjs/plugin/isSameOrBefore.js');
+dayjs.extend(isSameOrBefore);
+
+// eslint-disable-next-line no-undef
+const isSameOrAfter = require('../../node_modules/dayjs/plugin/isSameOrAfter.js');
+dayjs.extend(isSameOrAfter);
+
+// eslint-disable-next-line no-undef
+const isToday = require('../../node_modules/dayjs/plugin/isToday.js');
+dayjs.extend(isToday);
+
+function filterFuture(point) {
+  return dayjs().isSameOrBefore(dayjs(point.dateFrom), 'day');
+}
+
+function filterPast(point) {
+  return dayjs().isSameOrAfter(dayjs(point.dateTo), 'day');
+}
+
+function filterPresent(point) {
+  return dayjs().isToday(dayjs(point.dateTo), 'day');
+}
+
 const subtractDates = (startDate, endDate) => {
   const dateFrom = dayjs(startDate);
   const dateTo = dayjs(endDate);
@@ -38,4 +62,4 @@ function humanizePointDueDatePoint(dueDatePoint) {
 }
 
 
-export { humanizePointDueDate, humanizePointDueDatePoint, humanizePointDueTime, subtractDates };
+export { humanizePointDueDate, humanizePointDueDatePoint, humanizePointDueTime, subtractDates, filterFuture, filterPast, filterPresent };
